@@ -29,14 +29,6 @@ A Flask-based school network application with user authentication, social featur
 
    The database will be created automatically.
 
-3. (Optional) Set up AI chatbot with OpenRouter API:
-   - Get an API key from [OpenRouter](https://openrouter.ai/keys)
-   - Set the environment variable:
-     ```bash
-     export OPENROUTE_API_KEY='your-api-key-here'
-     ```
-   - Or replace the placeholder in `app.py`
-
 ### Running the Application
 
 ```bash
@@ -54,9 +46,7 @@ The chatbot provides helpful responses for academic questions. If no API key is 
 - Study tips and strategies
 - General academic guidance
 
-# known Bug (fixed btw)
-
---------------------- The bugs are now fixed -------------
+# known Bug
 
 1. register button not working
 2. when not loged in create post does nothing
@@ -81,6 +71,3 @@ mai ye project kuch dino m open source ker dunga humare reginal wale project k s
 tum logo ki creativity achi thi presentation dena ata tha confident the
 
 - P.S: you guys made a great team <3
-# SchoolNet
-# SchoolNet
-# SchoolNet

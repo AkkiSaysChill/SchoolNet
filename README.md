@@ -39,6 +39,8 @@ Visit `http://localhost:5000` in your browser.
 
 ### AI Chatbot
 
+- api key maine hata di project uske bina chatbot kaam nahi kerega, mujhse mang lena
+
 The chatbot provides helpful responses for academic questions. If no API key is configured, it uses intelligent fallback responses covering:
 
 - Mathematics

@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Feed – LinkedIn Style</title>
+    <style>
+        :root {
+            :root {
+  --primary-neutron: #1A73E8;
+  --secondary-proton: #0D47A1;
+  --neutral-bg: #F8FAFC;
+  --text-primary: #1E293B;
+  --accent-electron: #10B981;
+}
+
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            color: var(--text);
+        }
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            padding: 10px;
+            z-index: 1000;
+        }
+        .nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            margin-top: 60px;
+            background: linear-gradient(135deg, #12141c 0%, #764ba2 100%);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+            z-index: -1;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .section {
+            margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .section h2 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .intro p {
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        /* Landing Page Styles */
+        body {
+            background: #e6c3a1 !important;
+            color: #800020;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            min-height: 100vh;
+            padding: 16px 0;
+        }
+
+        /* Enhanced Navigation System */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 58, 138, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            box-shadow: 0 2px 20px var(--shadow);
+        }
+
+        .nav-brand {
+            padding: 0 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-brand:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-brand:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+
+        .nav-brand .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-brand:hover .title {
+            color: var(--secondary);
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .nav-link:active {
+            transform: translateY(0) scale(0.98);
+            transition: all 0.1s ease;
+        }
+
+        .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            border-bottom-color: var(--secondary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #FFD700;
+            border-radius: 2px;
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        .nav-text {
+            font-size: 0.9rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 0 20px;
+        }
+
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-btn {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .profile-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-btn:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+
+        .profile-btn img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            transition: border-color 0.3s ease;
+        }
+
+        .profile-btn:hover img {
+            border-color: #FFD700;
+        }
+
+        .profile-initials {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7A1F2B;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover .profile-initials {
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+
+        .user-menu:hover .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-info {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .user-info strong {
+            display: block;
+            color: #7A1F2B;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .user-info small {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #eee;
+            margin: 0;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .dropdown-item:active {
+            transform: translateX(2px) scale(0.98);
+            transition: all 0.1s ease;
+        }
+
+        .dropdown-item.logout {
+            color: #dc3545;
+        }
+
+        .dropdown-item.logout:hover {
+            background: #fff5f5;
+        }
+
+        .dropdown-icon {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0) scale(0.95);
+            transition: all 0.1s ease;
+        }
+
+        .btn-icon {
+            font-size: 1rem;
+        }
+
+        .profile-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+            animation: growBorder 3s ease-in-out infinite;
+        }
+
+        .profile-btn::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #7A1F2B;
+            border-radius: 50%;
+            opacity: 0;
+            animation: borderPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes growBorder {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes borderPulse {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+        }
+
+        .profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Composer (LinkedIn style) */
+        .composer {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 3px 8px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .composer-top {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .composer-top img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+        }
+
+        .composer-top input {
+            flex: 1;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 10px 14px;
+            outline: none;
+            font-size: 0.9rem;
+            background: var(--neutral-bg);
+            color: var(--text);
+        }
+
+        .composer textarea {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            outline: none;
+            font-size: 0.9rem;
+            background: var(--neutral-bg);
+            color: var(--text);
+            resize: vertical;
+        }
+
+        .composer input[type="file"] {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 5px;
+            background: var(--neutral-bg);
+            color: var(--text);
+        }
+
+        .composer select {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 5px;
+            background: var(--neutral-bg);
+            color: var(--text);
+        }
+
+        .composer button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .composer button:hover {
+            background: var(--secondary);
+        }
+
+        /* Post */
+        .post {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 16px;
+            box-shadow: 0 3px 8px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        /* Pin button (shown on hover) */
+        .pin-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #ffd700;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.18s;
+            z-index: 10;
+        }
+
+        .post:hover .pin-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pin-btn.active {
+            background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,215,0,0.05));
+            box-shadow: 0 6px 20px rgba(255,215,0,0.08);
+        }
+
+        .post.pinned {
+            border-color: #ffd700;
+            box-shadow: 0 10px 30px rgba(255,215,0,0.08);
+        }
+
+        .post-header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .post-header img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+        }
+
+        .post-header .name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .post-header .meta {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .post-text {
+            font-size: 0.9rem;
+            line-height: 1.45;
+            margin: 8px 0;
+        }
+
+        .post-media img {
+            width: 100%;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .post-actions span {
+            cursor: pointer;
+        }
+
+        .post-actions span:hover {
+            color: #800020;
+        }
+
+        .comments-section {
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--neutral-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .comment-form {
+            margin-bottom: 10px;
+        }
+
+        .comments-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .comment {
+            background: #f0d2b3;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 6px;
+            border-left: 3px solid #800020;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #800020;
+        }
+
+        .comment-content {
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .comment-meta {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .login-prompt {
+            text-align: center;
+            padding: 20px;
+            background: #f0d2b3;
+            border-radius: 8px;
+            margin-top: 16px;
+            box-shadow: 0 3px 8px rgba(150,90,40,0.35);
+        }
+
+        .login-prompt a {
+            color: #800020;
+            font-weight: bold;
+        }
+
+        .flash-messages {
+            margin-bottom: 16px;
+        }
+
+        .flash-message {
+            background: #f0d2b3;
+            color: #800020;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 4px solid #800020;
+            box-shadow: 0 2px 4px rgba(150,90,40,0.2);
+        }
+            color: white;
+            animation: modalSlideIn 0.5s;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes modalSlideIn {
+            from { transform: scale(0.7) translateY(-50px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .close {
+            color: #fff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .close:hover {
+            color: #ffd700;
+        }
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: shapeFloat 15s infinite linear;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+        @keyframes shapeFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+
+        /* Navigation Animations and Transitions */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link.active {
+            animation: navPulse 2s infinite;
+        }
+
+        @keyframes navPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .nav-link.admin-link {
+            background: linear-gradient(135deg, rgba(255, 69, 0, 0.1), rgba(255, 140, 0, 0.1));
+            border-left: 3px solid #ff4500;
+        }
+
+        .nav-link.admin-link:hover {
+            background: linear-gradient(135deg, rgba(255, 69, 0, 0.2), rgba(255, 140, 0, 0.2));
+            border-left-color: #ff6347;
+        }
+
+        /* AI Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7A1F2B, #5C1720);
+            border: 3px solid #FFD700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(122, 31, 43, 0.4);
+            transition: all 0.3s ease;
+            animation: chatbotPulse 2s infinite;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(122, 31, 43, 0.6);
+        }
+
+        .chatbot-button:active {
+            transform: scale(0.9);
+            transition: all 0.1s ease;
+        }
+
+        @keyframes chatbotPulse {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(122, 31, 43, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(122, 31, 43, 0.7);
+            }
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+            border: 2px solid #7A1F2B;
+            overflow: hidden;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #7A1F2B, #5C1720);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-header .robot-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: #FFD700;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-close:hover {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .chatbot-close:active {
+            transform: scale(0.8);
+            transition: all 0.1s ease;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .chatbot-message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .chatbot-message.bot {
+            background: #7A1F2B;
+            color: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chatbot-message.user {
+            background: #FFD700;
+            color: #7A1F2B;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-input-area {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #7A1F2B;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chatbot-input:focus {
+            border-color: #FFD700;
+        }
+
+        .chatbot-send {
+            padding: 10px 20px;
+            background: #7A1F2B;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-send:hover {
+            background: #5C1720;
+            transform: translateY(-2px);
+        }
+
+        .chatbot-send:active {
+            transform: translateY(0) scale(0.95);
+            transition: all 0.1s ease;
+        }
+
+        .chatbot-typing {
+            display: none;
+            padding: 10px 15px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Mobile Navigation Toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+
+        .nav-toggle:active {
+            transform: scale(0.9);
+            transition: all 0.1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .main-nav {
+                padding: 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                z-index: 999;
+            }
+
+            .main-nav.mobile-visible {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-nav .nav-link {
+                justify-content: flex-start;
+                padding: 15px 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                width: 100%;
+            }
+
+            .main-nav .nav-link:last-child {
+                border-bottom: none;
+            }
+
+            .nav-toggle.active {
+                background: rgba(255, 215, 0, 0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Enhanced Navigation System -->
+        <div class="topbar">
+            <a href="{{ url_for('home') }}" class="nav-brand">
+                <div class="title">🎓 KV Network</div>
+            </a>
+            <nav class="main-nav" id="main-nav">
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+                <a href="{{ url_for('home') }}" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="{{ url_for('calendar') }}" class="nav-link">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-text">Calendar</span>
+                </a>
+                <a href="{{ url_for('aboutUS') }}" class="nav-link">
+                    <span class="nav-icon">ℹ️</span>
+                    <span class="nav-text">About</span>
+                </a>
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                <a href="{{ url_for('admin_dashboard') }}" class="nav-link admin-link">
+                    <span class="nav-icon">🛡️</span>
+                    <span class="nav-text">Admin</span>
+                </a>
+                {% endif %}
+            </nav>
+            <div class="nav-actions">
+                {% if current_user.is_authenticated %}
+                    <div class="user-menu">
+                        <div class="profile-btn">
+                            {% if current_user.profile_picture %}
+                                <a href="{{ url_for('profile') }}">
+                                    <img src="{{ url_for('uploaded_file', filename=current_user.profile_picture) }}" alt="Profile" />
+                                </a>
+                            {% else %}
+                                <a href="{{ url_for('profile') }}">
+                                    <div class="profile-initials">{{ current_user.username[0].upper() }}</div>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="user-dropdown">
+                            <div class="user-info">
+                                <strong>{{ current_user.username }}</strong>
+                                <small>{{ current_user.email }}</small>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for('profile') }}" class="dropdown-item">
+                                <span class="dropdown-icon">👤</span>
+                                My Profile
+                            </a>
+                            <a href="{{ url_for('logout') }}" class="dropdown-item logout">
+                                <span class="dropdown-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <button class="nav-btn login-btn" onclick="window.location.href='{{ url_for('login') }}'">
+                        <span class="btn-icon">🔐</span>
+                        Login
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <!-- Composer (LinkedIn style) -->
+        <form class="composer" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+            <div class="composer-top">
+                {% if current_user.profile_picture %}
+                    <a href="{{ url_for('profile', user_id=current_user.id) }}">
+                        <img src="{{ url_for('uploaded_file', filename=current_user.profile_picture) }}" alt="Profile" />
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('profile', user_id=current_user.id) }}">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: #7A1F2B; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">{{ current_user.username[0].upper() }}</div>
+                    </a>
+                {% endif %}
+                <input type="text" name="title" placeholder="Post title..." required />
+            </div>
+            <textarea name="description" placeholder="What's on your mind?" rows="3" style="width: 100%; margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: #e6c3a1;"></textarea>
+            <label for="file-upload" style="cursor: pointer; display: inline-block; margin: 10px 0; padding: 8px 12px; background: #7A1F2B; color: white; border-radius: 20px; font-size: 14px;">
+                📷 Add Photo
+            </label>
+            <input type="file" id="file-upload" name="file" accept="image/*" style="display: none;" />
+            <select name="type" style="margin: 10px 0; padding: 5px;">
+                <option value="announcement">📄 Announcement</option>
+                <option value="event">📅 Event</option>
+                <option value="reminder">🔔 Reminder</option>
+                <option value="other">📝 Other</option>
+            </select>
+            <button type="submit" style="background: #800020; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; margin-left: 10px;">Post</button>
+        </form>
+        {% endif %}
+
+        <!-- Pinned Announcements -->
+        <div id="pinned-box" style="display:none; margin-bottom:16px;">
+            <div class="section" style="padding:12px 14px;">
+                <h3 style="margin:0 0 8px 0; color:#FFD700;">📌 Pinned Announcements</h3>
+                <div id="pinned-list"></div>
+            </div>
+        </div>
+
+        <!-- Feed Posts -->
+        {% if feed_posts %}
+            {% for post in feed_posts %}
+            <div class="post" data-post-id="{{ post.id }}">
+                <button class="pin-btn" data-post-id="{{ post.id }}" title="Pin this post" aria-pressed="false" aria-label="Pin post">📌</button>
+                <div class="post-header">
+                    {% if post.author_user and post.author_user.profile_picture %}
+                        <a href="{{ url_for('profile', user_id=post.author_user.id) }}">
+                            <img src="{{ url_for('uploaded_file', filename=post.author_user.profile_picture) }}" alt="Profile" />
+                        </a>
+                    {% elif post.author_user %}
+                        <a href="{{ url_for('profile', user_id=post.author_user.id) }}">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: #7A1F2B; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">{{ post.author_user.username[0].upper() }}</div>
+                        </a>
+                    {% else %}
+                        <img src="https://i.pravatar.cc/150?img={{ loop.index + 11 }}" alt="Profile" />
+                    {% endif %}
+                    <div>
+                        <div class="name">
+                            {% if post.author_user %}
+                                <a href="{{ url_for('profile', user_id=post.author_user.id) }}" style="color: inherit; text-decoration: none;">{{ post.author_user.username }}</a>
+                            {% else %}
+                                {{ post.author or 'School Admin' }}
+                            {% endif %}
+                        </div>
+                        <div class="meta">{{ post.type or 'Post' }} · {{ post.id[:10] if post.id else 'Recently' }}</div>
+                    </div>
+                </div>
+                <div class="post-text">
+                    <strong>{{ post.title }}</strong><br>
+                    {{ post.description }}
+                </div>
+                {% if post.filename %}
+                <div class="post-media">
+                    <a href="/something/{{ post.filename }}" target="_blank">
+                        <img src="/something/{{ post.filename }}" alt="Attachment" style="max-width: 100%; height: auto;" />
+                    </a>
+                </div>
+                {% endif %}
+                <div class="post-actions">
+                    <span onclick="toggleComments('{{ post.id }}')">💬 Comment</span>
+                </div>
+                
+                <!-- Comments Section -->
+                <div id="comments-{{ post.id }}" class="comments-section" style="display: none;">
+                    {% if current_user.is_authenticated %}
+                    <form class="comment-form" action="{{ url_for('add_comment') }}" method="post">
+                        <input type="hidden" name="post_id" value="{{ post.id }}" />
+                        <input type="text" name="content" placeholder="Write a comment..." required style="width: 80%; padding: 5px; border: 1px solid #ccc; border-radius: 15px;" />
+                        <button type="submit" style="background: #800020; color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer;">Post</button>
+                    </form>
+                    {% endif %}
+                    <div class="comments-list" id="comments-list-{{ post.id }}">
+                        <!-- Comments will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- Sample Posts -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://i.pravatar.cc/150?img=12" />
+                    <div>
+                        <div class="name">ABC Public School</div>
+                        <div class="meta">Official · 2 hours ago</div>
+                    </div>
+                </div>
+                <div class="post-text">
+                    Welcome to our School Network! Stay updated with the latest announcements, events, and school activities.
+                </div>
+                <div class="post-media">
+                    <img src="https://picsum.photos/600/350?random=1" />
+                </div>
+                <div class="post-actions">
+                    <span>💬 Comment</span>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://i.pravatar.cc/150?img=32" />
+                    <div>
+                        <div class="name">School Administration</div>
+                        <div class="meta">Department · Yesterday</div>
+                    </div>
+                </div>
+                <div class="post-text">
+                    Check out our school calendar for upcoming events, exams, and holidays. Teachers can add new events directly.
+                </div>
+                <div class="post-actions">
+                    <span>💬 Comment</span>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if not current_user.is_authenticated %}
+        <div class="login-prompt">
+            <p>Please <a href="{{ url_for('login') }}">log in</a> to post and interact with school updates.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-button" id="chatbot-button" title="AI Academic Assistant">
+            🤖
+        </div>
+        <div class="chatbot-window" id="chatbot-window">
+            <div class="chatbot-header">
+                <div>
+                    <span class="robot-icon">🤖</span>
+                    AI Academic Assistant
+                </div>
+                <span class="chatbot-close" id="chatbot-close">&times;</span>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="chatbot-message bot">
+                    Hello! I'm your AI Academic Assistant. I can help you with:
+                    <br>• Mathematics problems
+                    <br>• Science questions
+                    <br>• Study tips
+                    <br>• Homework help
+                    <br>• Exam preparation
+                    <br><br>How can I assist you today?
+                </div>
+            </div>
+            <div class="chatbot-typing" id="chatbot-typing">
+                AI is typing...
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask me anything about academics..." />
+                <button class="chatbot-send" id="chatbot-send">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            const isVisible = commentsSection.style.display !== 'none';
+            
+            if (isVisible) {
+                commentsSection.style.display = 'none';
+            } else {
+                commentsSection.style.display = 'block';
+                loadComments(postId);
+            }
+        }
+
+        function loadComments(postId) {
+            fetch(`/api/comments/${postId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const commentsList = document.getElementById(`comments-list-${postId}`);
+                    commentsList.innerHTML = '';
+                    
+                    if (data.comments.length === 0) {
+                        commentsList.innerHTML = '<p style="font-size: 0.8rem; color: #666; text-align: center;">No comments yet.</p>';
+                        return;
+                    }
+                    
+                    data.comments.forEach(comment => {
+                        const commentDiv = document.createElement('div');
+                        commentDiv.className = 'comment';
+                        
+                        let profileHtml = '';
+                        if (comment.author_user && comment.author_user.profile_picture) {
+                            profileHtml = `<a href="/profile/${comment.author_user.id}"><img src="/something/${comment.author_user.profile_picture}" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;" /></a>`;
+                        } else if (comment.author_user) {
+                            profileHtml = `<a href="/profile/${comment.author_user.id}"><div style="width: 30px; height: 30px; border-radius: 50%; background: #7A1F2B; display: inline-flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 10px;">${comment.author_user.username[0].toUpperCase()}</div></a>`;
+                        } else {
+                            profileHtml = '<img src="https://i.pravatar.cc/150?img=12" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;" />';
+                        }
+                        
+                        const authorName = comment.author_user ? `<a href="/profile/${comment.author_user.id}" style="color: inherit; text-decoration: none; font-weight: bold;">${comment.author_user.username}</a>` : comment.author;
+                        
+                        commentDiv.innerHTML = `
+                            <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                                ${profileHtml}
+                                <div>
+                                    <div class="comment-author">${authorName}</div>
+                                    <div class="comment-meta">${new Date(comment.created_at).toLocaleString()}</div>
+                                </div>
+                            </div>
+                            <div class="comment-content">${comment.content}</div>
+                        `;
+                        commentsList.appendChild(commentDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading comments:', error);
+                });
+        }
+
+        // Navigation System Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const userMenu = document.querySelector('.user-menu');
+                const userDropdown = document.querySelector('.user-dropdown');
+                
+                if (userMenu && !userMenu.contains(e.target)) {
+                    // Dropdown will close automatically due to CSS hover
+                }
+            });
+
+            // Add keyboard navigation support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close any open dropdowns
+                    const dropdowns = document.querySelectorAll('.user-dropdown');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.style.opacity = '0';
+                        dropdown.style.visibility = 'hidden';
+                    });
+                }
+            });
+
+            // Mobile navigation toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const mainNav = document.getElementById('main-nav');
+            
+            if (navToggle && mainNav) {
+                navToggle.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-visible');
+                    navToggle.classList.toggle('active');
+                });
+
+                // Close mobile nav when clicking outside or on a link
+                document.addEventListener('click', function(e) {
+                    if (!mainNav.contains(e.target) && !navToggle.contains(e.target)) {
+                        mainNav.classList.remove('mobile-visible');
+                        navToggle.classList.remove('active');
+                    }
+                });
+
+                // Close mobile nav when clicking on a nav link
+                const navLinks = mainNav.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mainNav.classList.remove('mobile-visible');
+                        navToggle.classList.remove('active');
+                    });
+                });
+            }
+        });
+
+        // Auto-hide flash messages after 5 seconds
+        setTimeout(() => {
+            const flashMessages = document.querySelector('.flash-messages');
+            if (flashMessages) {
+                flashMessages.style.display = 'none';
+            }
+        }, 5000);
+
+        // AI Chatbot Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatbotButton = document.getElementById('chatbot-button');
+            const chatbotWindow = document.getElementById('chatbot-window');
+            const chatbotClose = document.getElementById('chatbot-close');
+            const chatbotInput = document.getElementById('chatbot-input');
+            const chatbotSend = document.getElementById('chatbot-send');
+            const chatbotMessages = document.getElementById('chatbot-messages');
+            const chatbotTyping = document.getElementById('chatbot-typing');
+
+            // Toggle chatbot window
+            chatbotButton.addEventListener('click', function() {
+                const isVisible = chatbotWindow.style.display === 'flex';
+                chatbotWindow.style.display = isVisible ? 'none' : 'flex';
+            });
+
+            chatbotClose.addEventListener('click', function() {
+                chatbotWindow.style.display = 'none';
+            });
+
+            // Send message function
+            function sendMessage() {
+                const message = chatbotInput.value.trim();
+                if (message === '') return;
+
+                // Add user message
+                addMessage(message, 'user');
+                chatbotInput.value = '';
+
+                // Show typing indicator
+                chatbotTyping.style.display = 'block';
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+                // Send request to AI API
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    chatbotTyping.style.display = 'none';
+                    if (data.error) {
+                        addMessage("Sorry, I encountered an error. Please try again.", 'bot');
+                    } else {
+                        addMessage(data.response, 'bot');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    chatbotTyping.style.display = 'none';
+                    addMessage("I'm sorry, I'm having trouble connecting right now. Please try again later.", 'bot');
+                });
+            }
+
+            // Send on button click
+            chatbotSend.addEventListener('click', sendMessage);
+
+            // Send on Enter key
+            chatbotInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Add message to chat
+            function addMessage(text, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chatbot-message ${type}`;
+                messageDiv.innerHTML = text.replace(/\n/g, '<br>');
+                chatbotMessages.appendChild(messageDiv);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+        });
+    </script>
+
+    <script>
+        (function(){
+            const STORAGE_KEY = 'pinnedPosts';
+            function getPinned(){
+                try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }catch(e){return []}
+            }
+            function savePinned(ids){ localStorage.setItem(STORAGE_KEY, JSON.stringify(ids)); }
+
+            function renderPinned(){
+                const pinnedIds = getPinned();
+                const box = document.getElementById('pinned-box');
+                const list = document.getElementById('pinned-list');
+                if(!list || !box) return;
+                list.innerHTML = '';
+                if(!pinnedIds || pinnedIds.length === 0){ box.style.display = 'none'; return; }
+                box.style.display = 'block';
+                pinnedIds.forEach(id => {
+                    const post = document.querySelector(`.post[data-post-id="${id}"]`);
+                    if(!post) return; // skip if not on page
+                    const clone = document.createElement('div');
+                    clone.className = 'post pinned';
+                    // minimal content
+                    const header = post.querySelector('.post-header');
+                    const text = post.querySelector('.post-text');
+                    if(header) clone.appendChild(header.cloneNode(true));
+                    if(text) clone.appendChild(text.cloneNode(true));
+                    // add unpin button
+                    const unpin = document.createElement('button');
+                    unpin.className = 'pin-btn active';
+                    unpin.innerHTML = '✖';
+                    unpin.title = 'Unpin';
+                    unpin.addEventListener('click', function(e){ e.stopPropagation(); togglePin(id); });
+                    clone.appendChild(unpin);
+                    clone.style.marginBottom = '8px';
+                    list.appendChild(clone);
+                });
+            }
+
+            function togglePin(postId){
+                const ids = getPinned();
+                const idx = ids.indexOf(postId);
+                const post = document.querySelector(`.post[data-post-id="${postId}"]`);
+                const btn = document.querySelector(`.pin-btn[data-post-id="${postId}"]`);
+                if(idx === -1){ ids.unshift(postId); if(post) post.classList.add('pinned'); if(btn){ btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); btn.title = 'Unpin this post'; } }
+                else { ids.splice(idx,1); if(post) post.classList.remove('pinned'); if(btn){ btn.classList.remove('active'); btn.setAttribute('aria-pressed','false'); btn.title = 'Pin this post'; } }
+                savePinned(ids);
+                renderPinned();
+            }
+
+            document.addEventListener('DOMContentLoaded', function(){
+                // initialize pin buttons
+                document.querySelectorAll('.pin-btn[data-post-id]').forEach(btn => {
+                    btn.addEventListener('click', function(e){ e.stopPropagation(); const id = btn.getAttribute('data-post-id'); togglePin(id); });
+                });
+
+                // apply initial pinned state
+                const pinned = getPinned();
+                pinned.forEach(id => {
+                    const post = document.querySelector(`.post[data-post-id="${id}"]`);
+                    const btn = document.querySelector(`.pin-btn[data-post-id="${id}"]`);
+                    if(post) post.classList.add('pinned');
+                    if(btn){ btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); btn.title = 'Unpin this post'; }
+                });
+
+                renderPinned();
+            });
+        })();
+    </script>
+</body>
+</html>

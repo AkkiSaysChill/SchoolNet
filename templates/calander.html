@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Calendar</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            --surface: #1a1a2e;
+            --surface-elevated: #16213e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border: #333366;
+            --shadow: rgba(99,102,241,0.08);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-link {
+            padding: 8px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: color 0.15s ease, background 0.12s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(99,102,241,0.04);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(99,102,241,0.06);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 20px;
+            background: var(--surface);
+            border-radius: 20px;
+            box-shadow: 0 28px 80px var(--shadow), 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        #month-nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #month-nav button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: var(--gradient);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        #month-nav button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(122, 31, 43, 0.3);
+        }
+
+        #month-year {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: var(--neutral-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .calendar th, .calendar td {
+            border: 1px solid var(--border);
+            padding: 10px;
+            text-align: center;
+            vertical-align: top;
+            min-height: 80px;
+        }
+
+        .calendar th {
+            background: var(--primary);
+            color: var(--text-primary);
+            font-weight: bold;
+        }
+
+        .calendar td {
+            background: var(--surface-elevated);
+            transition: background-color 0.2s;
+            color: var(--text-primary);
+        }
+
+        .calendar td:hover {
+            background-color: rgba(99,102,241,0.06);
+        }
+
+        .calendar .sunday {
+            background-color: rgba(239,68,68,0.06);
+        }
+
+        .calendar .sunday strong {
+            color: var(--error);
+        }
+
+        .day-header {
+            font-weight: bold;
+            text-align: center;
+            background: var(--primary);
+            color: var(--neutral-bg);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .event {
+            background-color: rgba(6,182,212,0.06);
+            margin: 2px 0;
+            padding: 5px;
+            font-size: 12px;
+            border-radius: 5px;
+            color: var(--text-primary);
+            border-left: 4px solid transparent;
+        }
+
+        .exam {
+            background-color: rgba(239,68,68,0.08);
+            border-left: 4px solid var(--error);
+        }
+
+        .holiday {
+            background-color: rgba(16,185,129,0.08);
+            border-left: 4px solid var(--success);
+        }
+
+        .cultural {
+            background-color: rgba(6,182,212,0.08);
+            border-left: 4px solid var(--accent);
+        }
+
+        .add-event {
+            margin-top: 30px;
+            background: var(--surface-elevated);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .add-event h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text-primary);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.12);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{{ url_for('home') }}" class="nav-brand"><i class="fas fa-school"></i>&nbsp; SchoolNet</a>
+        <div class="nav-menu">
+          <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+          <a class="nav-link active" href="{{ url_for('calendar') }}">Calendar</a>
+          <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+          <a class="nav-link" href="{{ url_for('aboutUS') }}">About Us</a>
+        </div>
+        <div class="user-menu">
+          {% if not current_user.is_authenticated %}
+            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+        <h1>School Calendar</h1>
+        <div id="month-nav">
+            <button onclick="prevMonth()">Previous</button>
+            <span id="month-year"></span>
+            <button onclick="nextMonth()">Next</button>
+        </div>
+        <div id="calendar"></div>
+        {% if current_user.role == 'teacher' %}
+        <div class="add-event">
+            <h2>Add Event</h2>
+            <form action="{{ url_for('add_event') }}" method="post">
+                <label>Title: <input type="text" name="title" required></label>
+                <label>Description: <textarea name="description"></textarea></label>
+                <label>Type:
+                    <select name="event_type" required>
+                        <option value="exam">Exam</option>
+                        <option value="holiday">Holiday</option>
+                        <option value="cultural">Cultural Event</option>
+                    </select>
+                </label>
+                <label>Date: <input type="date" name="date" required></label>
+                <button type="submit">Add Event</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        function renderCalendar(month, year) {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Create table
+            const table = document.createElement('table');
+            table.className = 'calendar';
+
+            // Day headers
+            const headerRow = document.createElement('tr');
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            days.forEach(day => {
+                const th = document.createElement('th');
+                th.textContent = day;
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
+
+            // Calendar rows
+            let date = 1;
+            for (let i = 0; i < 6; i++) { // Maximum 6 rows
+                const row = document.createElement('tr');
+
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement('td');
+
+                    if (i === 0 && j < firstDay) {
+                        // Empty cell
+                        cell.textContent = '';
+                    } else if (date > daysInMonth) {
+                        // Empty cell after last day
+                        cell.textContent = '';
+                    } else {
+                        // Day cell
+                        const dayDiv = document.createElement('div');
+                        dayDiv.innerHTML = `<strong>${date}</strong>`;
+                        dayDiv.id = `day-${year}-${month + 1}-${date}`;
+
+                        // Check if Sunday (j === 0) and add holiday
+                        if (j === 0) {
+                            dayDiv.classList.add('sunday');
+                            const holidayDiv = document.createElement('div');
+                            holidayDiv.className = 'event holiday';
+                            holidayDiv.textContent = 'Holiday (Sunday)';
+                            dayDiv.appendChild(holidayDiv);
+                        }
+
+                        cell.appendChild(dayDiv);
+                        date++;
+                    }
+
+                    row.appendChild(cell);
+                }
+
+                table.appendChild(row);
+
+                if (date > daysInMonth) break; // Stop if all days are added
+            }
+
+            calendar.appendChild(table);
+            document.getElementById('month-year').textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
+        }
+
+        function loadEvents() {
+            fetch('/api/events')
+                .then(response => response.json())
+                .then(data => {
+                    data.events.forEach(event => {
+                        const date = new Date(event.date);
+                        const dayId = `day-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+                        const dayDiv = document.getElementById(dayId);
+                        if (dayDiv) {
+                            const eventDiv = document.createElement('div');
+                            eventDiv.className = `event ${event.type}`;
+                            eventDiv.textContent = event.title;
+                            dayDiv.appendChild(eventDiv);
+                        }
+                    });
+                });
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+            loadEvents();
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+            loadEvents();
+        }
+
+        renderCalendar(currentMonth, currentYear);
+        loadEvents();
+    </script>
+</body>
+</html>

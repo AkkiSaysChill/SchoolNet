@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - School Network</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            --surface: #1a1a2e;
+            --surface-elevated: #16213e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border: #333366;
+            --shadow: rgba(99,102,241,0.08);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--background); color: var(--text-primary); }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: var(--gradient);
+            color: var(--text-primary);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .admin-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px var(--shadow);
+            text-align: center;
+            border-left: 4px solid var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .posts-section {
+            background: var(--surface);
+            border-radius: 10px;
+            box-shadow: 0 8px 24px var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .section-header {
+            background: var(--surface-elevated);
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            background: var(--gradient);
+            color: var(--text-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .admin-post {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .admin-post:last-child {
+            border-bottom: none;
+        }
+
+        .post-author {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7A1F2B;
+        }
+
+        .post-author-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 2px solid rgba(255,255,255,0.06);
+        }
+
+        .post-content {
+            flex: 1;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .post-meta {
+            margin-bottom: 10px;
+        }
+
+        .post-meta strong {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .post-meta span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .post-text {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-btn {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 6px 18px rgba(232, 62, 62, 0.12);
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(232, 62, 62, 0.18);
+        }
+
+        .post-media {
+            margin-top: 10px;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-posts h3 {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 15px;
+            }
+
+            .admin-header {
+                padding: 20px;
+            }
+
+            .admin-header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-post {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .post-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>🛡️ Admin Dashboard</h1>
+            <p>Manage posts and maintain community standards</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ posts|length }}</div>
+                <div class="stat-label">Total Posts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ posts|selectattr('type', 'equalto', 'announcement')|list|length }}</div>
+                <div class="stat-label">Announcements</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ posts|selectattr('type', 'equalto', 'event')|list|length }}</div>
+                <div class="stat-label">Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ posts|rejectattr('type', 'in', ['announcement', 'event', 'reminder'])|list|length }}</div>
+                <div class="stat-label">Other Posts</div>
+            </div>
+        </div>
+
+        <div class="posts-section">
+            <div class="section-header">
+                <h2 class="section-title">📋 All Posts</h2>
+                <a href="{{ url_for('home') }}" class="back-btn">← Back to Feed</a>
+            </div>
+
+            {% if posts %}
+                {% for post in posts %}
+                <div class="admin-post">
+                    <div class="post-author-section">
+                        {% if post.author_user and post.author_user.profile_picture %}
+                            <img src="{{ url_for('uploaded_file', filename=post.author_user.profile_picture) }}" alt="Profile" class="post-author">
+                        {% elif post.author_user %}
+                            <div class="post-author-placeholder">{{ post.author_user.username[0].upper() }}</div>
+                        {% else %}
+                            <div class="post-author-placeholder">?</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="post-content">
+                        <div class="post-header">
+                            <div class="post-meta">
+                                <strong>
+                                    {% if post.author_user %}
+                                        {{ post.author_user.username }}
+                                    {% else %}
+                                        {{ post.author or 'Unknown User' }}
+                                    {% endif %}
+                                </strong>
+                                <span>{{ post.type or 'Post' }} • {{ post.id[:10] if post.id else 'Unknown' }}</span>
+                            </div>
+                            <div class="post-actions">
+                                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.')">
+                                    <button type="submit" class="delete-btn">🗑️ Delete</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="post-text">
+                            <strong>{{ post.title }}</strong><br>
+                            {{ post.description }}
+                        </div>
+
+                        {% if post.filename %}
+                        <div class="post-media">
+                            <img src="/{{ post_file_path_prefix }}/{{ post.filename }}" alt="Post media" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-posts">
+                    <h3>No posts found</h3>
+                    <p>There are currently no posts in the system.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

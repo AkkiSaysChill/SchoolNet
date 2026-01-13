@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            --surface: #1a1a2e;
+            --surface-elevated: #16213e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border: #333366;
+            --shadow: rgba(99,102,241,0.08);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body { background: var(--background); color: var(--text-primary); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .profile-header {
+            background: var(--gradient);
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px var(--shadow);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255,255,255,0.06);
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        }
+        .profile-picture-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            border: 4px solid rgba(255,255,255,0.06);
+        }
+        .profile-info h1 {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .profile-info p {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        .profile-picture, .profile-picture-placeholder {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .profile-picture:hover, .profile-picture-placeholder:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 36px var(--shadow);
+        }
+
+        /* Interactive glowing ring for profile picture */
+        .profile-picture-label {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            padding: 6px;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .profile-picture-label::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99,102,241,0.12), transparent 40%);
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.22s ease, transform 0.28s ease;
+            pointer-events: none;
+        }
+
+        .profile-picture-label::after {
+            content: '';
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            border: 2px solid rgba(99,102,241,0.12);
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+
+        .profile-picture-label:hover,
+        .profile-picture-label:focus {
+            transform: scale(1.03);
+            box-shadow: 0 18px 40px rgba(99,102,241,0.08);
+        }
+
+        .profile-picture-label:hover::before,
+        .profile-picture-label:focus::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .profile-picture-label.glow::after {
+            animation: pulse-ring 1000ms ease-out forwards;
+            opacity: 1;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.9; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        .uploaded-check {
+            position: absolute;
+            right: -6px;
+            bottom: -6px;
+            background: var(--primary);
+            color: white;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            font-size: 12px;
+            transform: scale(0.6);
+            opacity: 0;
+            transition: all 220ms ease;
+        }
+
+        .profile-picture-label.glow .uploaded-check { opacity: 1; transform: scale(1); }
+
+        .upload-form {
+            margin-top: 20px;
+        }
+        .upload-form input[type="file"] {
+            margin-bottom: 10px;
+        }
+        .hidden-file-input {
+            display: none;
+        }
+        .setup-profile-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--gradient);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+        .setup-profile-link:hover {
+            background: var(--primary-dark);
+        }
+        .setup-form {
+            background: var(--surface);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .setup-form h2 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 8px 28px var(--shadow);
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .profile-details-title { color: var(--text-primary); margin-bottom: 15px; }
+        .profile-details-card { background: var(--surface); border-radius: 10px; padding: 20px; box-shadow: 0 8px 24px var(--shadow); border: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <a href="{{ url_for('home') }}" class="back-link">&larr; Back to Feed</a>
+        
+        <div class="profile-header">
+            {% if is_own_profile %}
+                <form action="{{ url_for('upload_profile_picture') }}" method="post" enctype="multipart/form-data" class="upload-form" id="profile-upload-form">
+                    <input type="file" name="profile_picture" accept="image/*" required class="hidden-file-input" id="profile-picture-input" onchange="document.getElementById('profile-upload-form').submit();">
+                    
+                    <label for="profile-picture-input" class="profile-picture-label" tabindex="0" aria-label="Upload profile picture">
+                        {% if user.profile_picture %}
+                            <img src="{{ url_for('uploaded_file', filename=user.profile_picture) }}" alt="Profile Picture" class="profile-picture">
+                        {% else %}
+                            <div class="profile-picture-placeholder">{{ user.username[0].upper() }}</div>
+                        {% endif %}
+                    </label>"
+                    
+                    <div class="profile-info">
+                        <h1>{{ user.username }}</h1>
+                        <p>Member since {{ user.created_at.strftime('%B %Y') if user.created_at else 'Unknown' }}</p>
+                        <p style="font-size: 14px; color: var(--text-secondary); margin-top: 10px;">📷 Click profile picture to change</p>
+                    </div>
+                </form>
+            {% else %}
+                {% if user.profile_picture %}
+                    <img src="{{ url_for('uploaded_file', filename=user.profile_picture) }}" alt="Profile Picture" class="profile-picture">
+                {% else %}
+                    <div class="profile-picture-placeholder">{{ user.username[0].upper() }}</div>
+                {% endif %}
+                
+                <div class="profile-info">
+                    <h1>{{ user.username }}</h1>
+                    <p>Member since {{ user.created_at.strftime('%B %Y') if user.created_at else 'Unknown' }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if user.full_name %}
+        <div class="profile-details">
+            <h2 class="profile-details-title">Profile Information</h2>
+            <div class="profile-details-card">
+                <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+                {% if user.role == 'student' %}
+                    <p><strong>Class:</strong> {{ user.class_name }}</p>
+                    <p><strong>Roll Number:</strong> {{ user.roll_no }}</p>
+                    <p><strong>Section:</strong> {{ user.section }}</p>
+                    {% if user.student_council_post and user.student_council_post != 'none' %}
+                        <p><strong>Student Council Post:</strong> {{ user.student_council_post.replace('_', ' ').title() }}</p>
+                    {% endif %}
+                {% elif user.role == 'teacher' %}
+                    <p><strong>Subject:</strong> {{ user.subject.replace('_', ' ').title() }}</p>
+                {% elif user.role == 'admin' %}
+                    <p><strong>Administrator</strong></p>
+                {% endif %}
+                <p><strong>Date of Birth:</strong> {{ user.date_of_birth.strftime('%B %d, %Y') if user.date_of_birth else 'Not set' }}</p>
+                <p><strong>Role:</strong> {{ user.role.title() }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if is_own_profile %}
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="#setup-form" class="setup-profile-link" onclick="document.getElementById('setup-form').style.display='block'; this.style.display='none';">Setup Profile</a>
+        </div>
+
+        <div id="setup-form" class="setup-form" style="display: none;">
+            <h2>Complete Your Profile</h2>
+            <form action="{{ url_for('setup_profile') }}" method="post">
+                {% if user.role == 'student' %}
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="class">Class</label>
+                        <select id="class" name="class" required>
+                            <option value="">Select Class</option>
+                            <option value="1">Class 1</option>
+                            <option value="2">Class 2</option>
+                            <option value="3">Class 3</option>
+                            <option value="4">Class 4</option>
+                            <option value="5">Class 5</option>
+                            <option value="6">Class 6</option>
+                            <option value="7">Class 7</option>
+                            <option value="8">Class 8</option>
+                            <option value="9">Class 9</option>
+                            <option value="10">Class 10</option>
+                            <option value="11">Class 11</option>
+                            <option value="12">Class 12</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="roll_no">Roll Number</label>
+                        <input type="text" id="roll_no" name="roll_no" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="section">Section</label>
+                        <select id="section" name="section" required>
+                            <option value="">Select Section</option>
+                            <option value="A">Section A</option>
+                            <option value="B">Section B</option>
+                            <option value="C">Section C</option>
+                            <option value="D">Section D</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="student_council_post">Post in Student Council</label>
+                        <input type="text" id="student_council_post" name="student_council_post" placeholder="Enter your council post (Optional)">
+                    </div>
+                {% elif user.role == 'teacher' %}
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select Subject</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="english">English</option>
+                            <option value="hindi">Hindi</option>
+                            <option value="science">Science</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                            <option value="history">History</option>
+                            <option value="geography">Geography</option>
+                            <option value="civics">Civics</option>
+                            <option value="economics">Economics</option>
+                            <option value="computer_science">Computer Science</option>
+                            <option value="physical_education">Physical Education</option>
+                            <option value="art">Art</option>
+                            <option value="music">Music</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                {% elif user.role == 'admin' %}
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" required>
+                </div>
+                
+                <button type="submit" class="btn-submit">Save Profile</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        const input = document.getElementById('profile-picture-input');
+        const label = document.querySelector('label[for="profile-picture-input"]');
+        if(!label) return;
+
+        // allow keyboard activation (Enter / Space)
+        label.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            if(input) input.click();
+          }
+        });
+
+        // when a file is selected, animate glow and show check
+        if(input){
+          input.addEventListener('change', function(){
+            label.classList.add('glow');
+            const chk = document.createElement('div');
+            chk.className = 'uploaded-check';
+            chk.textContent = '✓';
+            label.appendChild(chk);
+            setTimeout(()=>{ label.classList.remove('glow'); chk.remove(); }, 1200);
+          });
+        }
+
+        // accessibility: focus styles
+        label.addEventListener('focus', ()=> label.classList.add('focus'));
+        label.addEventListener('blur', ()=> label.classList.remove('focus'));
+      });
+    </script>
+</body>
+</html>

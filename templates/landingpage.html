@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School Feed – LinkedIn Style</title>
+  <style>
+    * { box-sizing: border-box; font-family: "Segoe UI", Tahoma, sans-serif; }
+    body {
+      margin: 0;
+      background: #e6c3a1;
+      color: #800020;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      min-height: 100vh;
+      padding: 16px 0;
+    }
+
+    /* Top bar (LinkedIn-style) */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #f0d2b3;
+      padding: 10px 16px;
+      border-bottom: 1px solid #c49a6c;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar .title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #800020;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #800020;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      text-decoration: underline;
+    }
+
+    .profile-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .profile-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Composer (LinkedIn style) */
+    .composer {
+      background: #f0d2b3;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 8px rgba(150,90,40,0.35);
+    }
+    .composer-top {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .composer-top img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+    }
+    .composer-top input {
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      padding: 10px 14px;
+      outline: none;
+      font-size: 0.9rem;
+      background: #e6c3a1;
+    }
+
+    .composer-actions {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #800020;
+    }
+
+    /* Post */
+    .post {
+      background: #f0d2b3;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 8px rgba(150,90,40,0.35);
+    }
+
+    .post-header {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .post-header img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+    }
+    .post-header .name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .post-header .meta {
+      font-size: 0.75rem;
+      color: #800020;
+    }
+
+    .post-text {
+      font-size: 0.9rem;
+      line-height: 1.45;
+      margin: 8px 0;
+    }
+
+    .post-media img {
+      width: 100%;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    .post-actions {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #800020;
+    }
+    .post-actions span {
+      cursor: pointer;
+    }
+    .post-actions span:hover {
+      color: #800020;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="topbar">
+      <div class="title">🏫 School Network</div>
+      <div class="top-actions">
+        <button class="nav-btn">About Us</button>
+        <button class="nav-btn">School Calendar</button>
+        <div class="profile-btn">
+          <img src="https://i.pravatar.cc/150?img=11" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Composer -->
+    <div class="composer">
+      <div class="composer-top">
+        <img src="https://i.pravatar.cc/150?img=11" />
+        <input placeholder="Start a post" />
+      </div>
+      <div class="composer-actions">
+        <span>📄 Announcement</span>
+        <span>📸 Photo</span>
+        <span>📅 Event</span>
+        <span>✍️ Write</span>
+      </div>
+    </div>
+
+    <!-- Post 1 -->
+    <div class="post">
+      <div class="post-header">
+        <img src="https://i.pravatar.cc/150?img=12" />
+        <div>
+          <div class="name">ABC Public School</div>
+          <div class="meta">Official · 2 hours ago</div>
+        </div>
+      </div>
+      <div class="post-text">
+        Proud to share highlights from our Annual Sports Day. Congratulations to all students and staff!
+      </div>
+      <div class="post-media">
+        <img src="https://picsum.photos/600/350?random=1" />
+      </div>
+      <div class="post-actions">
+        <span>👍 Like</span>
+        <span>💬 Comment</span>
+        <span>🔁 Repost</span>
+        <span>📤 Share</span>
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="post">
+      <div class="post-header">
+        <img src="https://i.pravatar.cc/150?img=32" />
+        <div>
+          <div class="name">Science Department</div>
+          <div class="meta">Department · Yesterday</div>
+        </div>
+      </div>
+      <div class="post-text">
+        Science Exhibition scheduled tomorrow at 10 AM in the main hall. All students are welcome.
+      </div>
+      <div class="post-actions">
+        <span>👍 Like</span>
+        <span>💬 Comment</span>
+        <span>🔁 Repost</span>
+        <span>📤 Share</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

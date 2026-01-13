@@ -1,0 +1,71 @@
+[
+  {
+    "id": "announcement_20260108_170902",
+    "description": "tomorrow is presentation day",
+    "filename": "",
+    "author": "admin@admin.admin",
+    "pinned": true,
+    "type": "announcement"
+  },
+  {
+    "id": "2026-01-08T16:40:51.688567",
+    "description": "date sheet out",
+    "filename": "post_20260108_164051.png",
+    "author": "admin@admin.admin",
+    "pinned": false
+  },
+  {
+    "id": "2026-01-08T16:03:11.577581",
+    "title": "hiiiii",
+    "type": "post",
+    "description": "hiiiii",
+    "filename": "",
+    "author": "aditihumai@gmail.com",
+    "pinned": false
+  },
+  {
+    "id": "2026-01-08T16:03:08.708586",
+    "title": "hi",
+    "type": "post",
+    "description": "hi",
+    "filename": "",
+    "author": "p@diddy.com",
+    "pinned": false
+  },
+  {
+    "id": "2026-01-08T16:02:19.798083",
+    "title": "hello",
+    "type": "post",
+    "description": "hello",
+    "filename": "",
+    "author": "p@diddy.com",
+    "pinned": false
+  },
+  {
+    "id": "2026-01-08T08:33:13.399247",
+    "title": "ai vidyasetu",
+    "type": "announcement",
+    "description": "today on 8 jan 2026 ai vidyasetu hackathon is conducted",
+    "filename": "",
+    "author": "teacher@gmail.com",
+    "pinned": false
+  },
+  {
+    "id": "2026-01-08T08:31:58.340973",
+    "title": "hey",
+    "type": "announcement",
+    "description": "",
+    "filename": "",
+    "author": "teacher@gmail.com",
+    "pinned": false
+  },
+  {
+    "id": "2026-01-08T06:42:13.123439",
+    "title": "hahahh",
+    "type": "Notice",
+    "description": "ualalala",
+    "filename": "",
+    "author": "test@haha.com",
+    "pinned": false
+  }
+]
